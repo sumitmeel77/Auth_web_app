@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <div class="center">
+        <h1>LOGIN</h1>
+
+        <!-- login form -->
+        <form id="login">
+            <div class="txt_field">
+                <input type="text" placeholder="USERNAME" id="username">
+                <span></span>
+            </div>
+            <div class="txt_field">
+                <input type="password" placeholder="PASSWORD" id="password">
+                <span></span>
+            </div>
+            <input type="submit" value="Login">
+            <div class="signup_link">
+                <a href="/register.html">Signup</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Adding submit button and event listener
+        const form = document.getElementById("login")
+        form.addEventListener('submit', LoginUser)
+
+        async function LoginUser(event) {
+            event.preventDefault() // for restricting default page on submission of form
+            const username = document.getElementById("username").value
+            const password = document.getElementById("password").value
+
+            // request made to server
+            const output = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            }
+            ).then((res) => res.json())
+
+            if (output.status === 'ok') {
+
+                window.location.href = "/Home.html"
+                // console.log("got the token", output.data)
+                localStorage.setItem('token', output.data) // storing token in local storage so it doenot lost on refreshing
+
+
+            } else {
+                alert(output.error)
+            }
+            console.log(output)
+        }
+    </script>
+
+
+</body>
+
+</html>

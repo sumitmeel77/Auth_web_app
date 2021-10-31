@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- form to register user -->
+    <div class="center">
+        <h1>REGISTER</h1>
+        <form id="reg-form">
+            <div class="txt_field">
+                <input type="text" placeholder="USERNAME" id="username">
+                <span></span>
+            </div>
+            <div class="txt_field">
+                <input type="password" placeholder="PASSWORD" id="password">
+                <span></span>
+            </div>
+            <input type="submit" value="Signup">
+            <div class="signup_link">
+                <a href="/login.html">Login</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Adding submit button and event listener
+        const form = document.getElementById('reg-form')
+        form.addEventListener('submit', registerUser)
+
+        async function registerUser(event) {
+            event.preventDefault() // for restricting default page on submission of form
+            const username = document.getElementById("username").value
+            const password = document.getElementById("password").value
+
+            // request made to server
+            const output = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            }
+            ).then((res) => res.json())
+
+            if (output.status === 'ok') {
+                // everythign went fine
+                window.location.href = "/login.html"
+                // alert('Success')
+            } else {
+                alert(output.error)
+            }
+            console.log(output)
+        }
+    </script>
+
+
+</body>
+
+</html>
