@@ -17,17 +17,23 @@
     <div class="center">
         <p>
         <h5>
-            This web app uses following frameworks - Nodejs , express , mongodb , html , css . So basically
-            this app is authentication app that allows user to login , signup and password change.
-            So at home page there are two buttons one for sign in and other for register . So when user registers
-            its data is stored in mongodb and user is redirecterd to login page.
-            After once login a token is generated using jwt(jsonwebtoken).and the token is stored and user data in
-            mongodb
-            also token is stored in cookies. One's logined user is directed to main page with password change and log
-            out button
-            So when user log out the app the cookie and token is delted. And on pasword vhange user is directed to login
-            page
-            and all token from mongodb under user are deleted. So if user leave without logout then nest time it
+            This web app uses following frameworks - Nodejs , express , mongodb ,javascript , html , css .
+            <h5>So basically this app is authentication app that allows user to login , signup and password change.
+                So at home page there are two buttons one for sign in and other for register . So when user registers
+                its data is stored in mongodb and user is redirecterd to login page.</h5>
+            <h5>After user login a token is generated using jwt(jsonwebtoken).and the token is stored with user data in
+                mongodb. Also token is stored in cookies.</h5>
+            <h5>One's logined user is directed to main page with password change and logout button. So when user log out
+                the app the
+                cookie and token coreesponding to current device is deleted. And when login user change password then
+                all token stored of differnet
+                devices gets deleted
+                and current user si redirected to home page . So when a registerd user login again after logout or
+                password change
+                then its stored cookies data is checked in database . if it is present then it is redirected to Home
+                page else not.
+            </h5>
+
         </h5>
         </p>
 

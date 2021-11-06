@@ -6,16 +6,26 @@ const User = require("./model/user.js")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser");
+const { error } = require("console")
 
+// const { MongoClient } = require('mongodb');
+
+const db = "mongodb+srv://AuthApp:AuthApp@cluster0.5kzz4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//     const collection = client.db("test").collection("devices");
+//     // perform actions on the collection object
+//     client.close();
+// });
 
 // secret key to jwt token
 const jwt_sceret = 'hsdfgshkagfahjsgfkhg3624@!3j234bk'
 
 // connecting with mongoose
-mongoose.connect('mongodb://localhost:27017/login-app-db', {
+mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-})
+}).then(() => { console.log("connection successfull") }).catch((err) => console.log(err))
 
 const app = express()
 
@@ -154,7 +164,7 @@ app.post("/api/change-password", async (req, res) => {
     }
 })
 
-//ap for logout button
+//api for logout button
 app.get("/logout", async (req, res) => {
     try {
         const cookieData = req.cookies.jwt
@@ -169,6 +179,19 @@ app.get("/logout", async (req, res) => {
         res.sendFile(__dirname + "/static/index.html");
     } catch (error) {
         res.json({ status: error })
+    }
+})
+
+//api for verifying user
+app.get("/userData", async (req, res) => {
+    try {
+        const cookievalue = req.cookies.jwt
+        // res.clearCookie("jwt")
+        // searching user name using value of stored cookie on browser
+        const a = await User.findOne({ tokens: { $elemMatch: { tokenvalue: cookievalue } } })
+        if (a != null) { res.json({ status: "found" }) } else { res.json({ status: "notfound" }) }
+    } catch (error) {
+        res.json({ status: "notfound" })
     }
 })
 

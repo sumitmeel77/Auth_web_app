@@ -37,15 +37,27 @@
             }
             return "";
         }
+        // api to collect data whether cookie is present in database or not
+        async function getapi(url) {
 
-        //  function to verify whether cookie is present or not
-        function doClick() {
+            const response = await fetch(url).then(response => response.json())
+            globalData = response.status
+            return (globalData)
+        }
+
+        //  function to verify whether cookie is present or not 
+        // function also verify whther cookie is present in mongodb or not
+        async function doClick() {
+
+            const dataValue = await getapi('/userData');
+            // getapi('/userData')
 
             let cookiedata = getCookie("jwt");
-            if (cookiedata != "")
+            if (dataValue === "found" && cookiedata != "")
                 window.location.href = "/Home.html";
             else
                 window.location.href = "/login.html";
+
         }
     </script>
 

@@ -55,14 +55,10 @@
             if (output.status === 'ok') {
 
                 window.location.href = "/Home.html"
-                // console.log("got the token", output.data)
-                localStorage.setItem('token', output.data) // storing token in local storage so it doenot lost on refreshing
-
 
             } else {
                 alert(output.error)
             }
-            console.log(output)
         }
     </script>
 
