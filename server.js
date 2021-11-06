@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser");
 const { error } = require("console")
 
+const port = process.env.PORT || 8000;
+
 // const { MongoClient } = require('mongodb');
 
 const db = "mongodb+srv://AuthApp:AuthApp@cluster0.5kzz4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -196,7 +198,7 @@ app.get("/userData", async (req, res) => {
 })
 
 
-app.listen(9999, () => {
-    console.log("server at 9999")
+app.listen(port, () => {
+    console.log(`server at ${port}`)
 }
 )
